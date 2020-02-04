@@ -2,7 +2,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Slider from "../components/slider"
+import HomeContentBlock from "../components/homeContentBlock"
 
 export default ({ data }) => {
   console.log(data);
@@ -16,14 +16,9 @@ export default ({ data }) => {
         <div dangerouslySetInnerHTML={{ __html: excerpt }} />
       </div>
       <div className='main-content'>
-        {data.categories.nodes.map((node) => {
-          return (
-            <div key={node.id}>
-              <h2>{node.name}</h2>
-              <Slider data={data[node.slug]}/>
-            </div>
-          )
-        })}
+        <HomeContentBlock title='Créateurs' data={data.designers} />
+        <HomeContentBlock title='Rencontres' data={data.encounters} />
+        <HomeContentBlock title='Conseils' data={data.advice} />
       </div>
     </Layout>
   )
@@ -41,7 +36,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    createurs: allWordpressPost(sort: {fields: [date]}, filter: {categories: {elemMatch: {slug: {eq: "createurs"}}}}) {
+    designers: allWordpressPost(sort: {fields: [date]}, filter: {categories: {elemMatch: {slug: {eq: "createurs"}}}}) {
       edges {
         node {
           title
@@ -51,7 +46,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    rencontres: allWordpressPost(sort: {fields: [date]}, filter: {categories: {elemMatch: {slug: {eq: "rencontres"}}}}) {
+    encounters: allWordpressPost(sort: {fields: [date]}, filter: {categories: {elemMatch: {slug: {eq: "rencontres"}}}}) {
       edges {
         node {
           title
@@ -61,7 +56,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    conseils: allWordpressPost(sort: {fields: [date]}, filter: {categories: {elemMatch: {slug: {eq: "conseils"}}}}) {
+    advice: allWordpressPost(sort: {fields: [date]}, filter: {categories: {elemMatch: {slug: {eq: "conseils"}}}}) {
       edges {
         node {
           title
@@ -69,13 +64,6 @@ export const pageQuery = graphql`
           slug
           date
         }
-      }
-    }
-    categories: allWordpressCategory(filter: {slug: {in: ["createurs", "conseils", "rencontres"]}}) {
-      nodes {
-        name
-        id
-        slug
       }
     }
   }

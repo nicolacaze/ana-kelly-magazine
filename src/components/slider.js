@@ -1,12 +1,17 @@
 import React from 'react'
-import { useStaticQuery, graphql } from "gatsby"
-
 
 export default ({ data }) => {
-  
+  console.log(data);
   return (
     <div>
-      {data.edges[0].node.title}
+      {data.edges.map(({ node }) => {
+        return (
+        <div key={node.id} >
+          <h4>{node.title}</h4>
+          <p>{node.excerpt}</p>
+        </div>
+        )
+      })}
     </div>
   )
 }
