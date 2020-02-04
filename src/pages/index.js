@@ -1,21 +1,82 @@
 import React from "react"
-import { Link } from "gatsby"
-
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
-import Image from "../components/image"
 import SEO from "../components/seo"
+import Slider from "../components/slider"
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+export default ({ data }) => {
+  console.log(data);
+  const { title, excerpt } = data.headline.edges[0].node;
+  return (
+    <Layout>
+      <SEO title="home" />
+      <h1>A la une</h1>
+      <div className='main-outline'>
+        <p>{title}</p>
+        <div dangerouslySetInnerHTML={{ __html: excerpt }} />
+      </div>
+      <div className='main-content'>
+        {data.categories.nodes.map((node) => {
+          return (
+            <div key={node.id}>
+              <h2>{node.name}</h2>
+              <Slider data={data[node.slug]}/>
+            </div>
+          )
+        })}
+      </div>
+    </Layout>
+  )
+}
 
-export default IndexPage
+export const pageQuery = graphql`
+  query {
+    headline: allWordpressPost(sort: {order: DESC, fields: [date]}, limit: 1) {
+      edges {
+        node {
+          title
+          excerpt
+          slug
+          date
+        }
+      }
+    }
+    createurs: allWordpressPost(sort: {fields: [date]}, filter: {categories: {elemMatch: {slug: {eq: "createurs"}}}}) {
+      edges {
+        node {
+          title
+          excerpt
+          slug
+          date
+        }
+      }
+    }
+    rencontres: allWordpressPost(sort: {fields: [date]}, filter: {categories: {elemMatch: {slug: {eq: "rencontres"}}}}) {
+      edges {
+        node {
+          title
+          excerpt
+          slug
+          date
+        }
+      }
+    }
+    conseils: allWordpressPost(sort: {fields: [date]}, filter: {categories: {elemMatch: {slug: {eq: "conseils"}}}}) {
+      edges {
+        node {
+          title
+          excerpt
+          slug
+          date
+        }
+      }
+    }
+    categories: allWordpressCategory(filter: {slug: {in: ["createurs", "conseils", "rencontres"]}}) {
+      nodes {
+        name
+        id
+        slug
+      }
+    }
+  }
+`
