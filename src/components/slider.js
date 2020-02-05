@@ -1,17 +1,36 @@
 import React from 'react'
+import styled from 'styled-components'
 
 export default ({ data }) => {
-  console.log(data);
+
+  const Container = styled.ul`
+    display: flex;
+    justify-content: start;
+    margin: 0;
+    width: 100%;
+    overflow-x: scroll;
+  `
+
+  const PostContainer = styled.li`
+    margin-left: 1rem;
+    list-style: none;
+    margin: 0 1rem 0 0;
+  `
+
+  const FeaturedImage = styled.img`
+    width: 200px;
+  `
+
   return (
-    <div>
+    <Container>
       {data.edges.map(({ node }) => {
         return (
-        <div key={node.id} >
-          <img src={node.jetpack_featured_media_url} alt="Post featured image"/>
+        <PostContainer key={node.id} >
+          <FeaturedImage src={node.jetpack_featured_media_url} alt="Post featured"/>
           <h4>{node.title}</h4>
-        </div>
+        </PostContainer>
         )
       })}
-    </div>
+    </Container>
   )
 }

@@ -5,7 +5,7 @@ export default ({ title, featuredImage }) => {
     <div>
       <h1>A la une</h1>
       <div className='main-outline'>
-        <img src={featuredImage} alt="Post featured image"/>
+        <img src={featuredImage} alt="Post featured"/>
         <p>{title}</p>
       </div>
     </div>
