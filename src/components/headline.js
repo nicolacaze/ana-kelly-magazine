@@ -11,12 +11,12 @@ export default ({ title, featuredImage }) => {
   `
 
   return (
-    <div>
+    <section>
       <h1>A la une</h1>
-      <div className='main-outline'>
+      <div>
         <HeadImage></HeadImage>
         <p>{title}</p>
       </div>
-    </div>
+    </section>
   )
 }

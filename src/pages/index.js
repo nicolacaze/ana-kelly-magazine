@@ -12,11 +12,9 @@ export default ({ data }) => {
     <Layout>
       <SEO title="home" />
       <Headline title={title} featuredImage={jetpack_featured_media_url} />
-      <div className='main-content'>
-        <HomeContentBlock title='Créateurs' data={data.designers} />
-        <HomeContentBlock title='Rencontres' data={data.encounters} />
-        <HomeContentBlock title='Conseils' data={data.advice} />
-      </div>
+      <HomeContentBlock title='Créateurs' data={data.designers} />
+      <HomeContentBlock title='Rencontres' data={data.encounters} />
+      <HomeContentBlock title='Conseils' data={data.advice} />
     </Layout>
   )
 }

@@ -19,7 +19,7 @@ export default ({ data }) => {
   `
 
   const FeaturedImage = styled.img`
-    width: 200px;
+    width: 400px;
   `
 
   return (

@@ -3,9 +3,9 @@ import Slider from "./slider"
 
 export default ({ title, data }) => {
   return (
-    <div>
+    <section>
       <h2>{title}</h2>
       <Slider data={data} />
-    </div>
+    </section>
   )
 }
