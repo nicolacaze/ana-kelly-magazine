@@ -39,6 +39,7 @@ export const pageQuery = graphql`
     designers: allWordpressPost(sort: {fields: [date]}, filter: {categories: {elemMatch: {slug: {eq: "createurs"}}}}) {
       edges {
         node {
+          jetpack_featured_media_url
           title
           excerpt
           slug
@@ -49,6 +50,7 @@ export const pageQuery = graphql`
     encounters: allWordpressPost(sort: {fields: [date]}, filter: {categories: {elemMatch: {slug: {eq: "rencontres"}}}}) {
       edges {
         node {
+          jetpack_featured_media_url
           title
           excerpt
           slug
@@ -59,6 +61,7 @@ export const pageQuery = graphql`
     advice: allWordpressPost(sort: {fields: [date]}, filter: {categories: {elemMatch: {slug: {eq: "conseils"}}}}) {
       edges {
         node {
+          jetpack_featured_media_url
           title
           excerpt
           slug

@@ -7,8 +7,8 @@ export default ({ data }) => {
       {data.edges.map(({ node }) => {
         return (
         <div key={node.id} >
+          <img src={node.jetpack_featured_media_url} alt="Post featured image"/>
           <h4>{node.title}</h4>
-          <p>{node.excerpt}</p>
         </div>
         )
       })}
