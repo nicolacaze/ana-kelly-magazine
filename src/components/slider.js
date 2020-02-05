@@ -9,6 +9,7 @@ export default ({ data }) => {
     margin: 0;
     width: 100%;
     overflow-x: scroll;
+    padding: 0;
   `
 
   const PostContainer = styled.li`
