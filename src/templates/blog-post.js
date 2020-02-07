@@ -3,13 +3,14 @@ import Layout from "../components/layout"
 import { graphql } from "gatsby"
 
 export default ({ data }) => {
-  const post = data.allWordpressPost.edges[0].node
-  console.log(post)
+  const post = data.allWordpressPost.edges[0].node;
+  const removeWPstyling = content => content.replace(/(style="[^"]+")|(class="[^"]+")/g,'');
+
   return (
     <Layout>
       <div>
         <h1>{post.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: post.content }} />
+        <div dangerouslySetInnerHTML={{ __html: removeWPstyling(post.content) }} />
       </div>
     </Layout>
   )
