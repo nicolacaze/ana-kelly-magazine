@@ -1,11 +1,12 @@
 import React from 'react'
+import { Link } from 'gatsby'
 import styled from 'styled-components'
 
 
-export default ({ title, featuredImage }) => {
+export default ({ post }) => {
 
   const HeadImage = styled.div`
-    background-image: url('${featuredImage}');
+    background-image: url('${post.jetpack_featured_media_url}');
     background-size: cover;
     height: 500px;
   `
@@ -14,8 +15,10 @@ export default ({ title, featuredImage }) => {
     <section>
       <h1>A la une</h1>
       <div>
-        <HeadImage></HeadImage>
-        <p>{title}</p>
+        <Link to={post.slug}>
+          <HeadImage></HeadImage>
+        </Link>
+        <p>{post.title}</p>
       </div>
     </section>
   )

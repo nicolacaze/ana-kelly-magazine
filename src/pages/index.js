@@ -7,14 +7,13 @@ import Headline from "../components/headline"
 
 export default ({ data }) => {
   console.log(data);
-  const { title, jetpack_featured_media_url } = data.headline.edges[0].node;
   return (
     <Layout>
       <SEO title="home" />
-      <Headline title={title} featuredImage={jetpack_featured_media_url} />
-      <HomeContentBlock title='Créateurs' data={data.designers} />
-      <HomeContentBlock title='Rencontres' data={data.encounters} />
-      <HomeContentBlock title='Conseils' data={data.advice} />
+      <Headline post={data.headline.edges[0].node} />
+      <HomeContentBlock title='Créateurs' posts={data.designers} />
+      <HomeContentBlock title='Rencontres' posts={data.encounters} />
+      <HomeContentBlock title='Conseils' posts={data.advice} />
     </Layout>
   )
 }
