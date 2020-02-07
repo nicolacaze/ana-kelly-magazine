@@ -38,6 +38,7 @@ const Layout = ({ children }) => {
 
   const Footer = styled.footer`
     background-color: beige;
+    padding: 1rem 3rem;
   `
 
   return (

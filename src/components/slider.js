@@ -5,8 +5,9 @@ import styled from 'styled-components'
 export default ({ posts }) => {
 
   const Container = styled.ul`
-    display: flex;
-    justify-content: start;
+    display: grid;
+    grid-template-columns: repeat(${posts.edges.length}, auto);
+    grid-template-rows: auto;
     margin: 0;
     width: 100%;
     overflow-x: scroll;

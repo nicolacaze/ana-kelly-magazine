@@ -8,7 +8,7 @@ export default ({ post }) => {
   const HeadImage = styled.div`
     background-image: url('${post.jetpack_featured_media_url}');
     background-size: cover;
-    height: 500px;
+    height: 350px;
   `
 
   return (
