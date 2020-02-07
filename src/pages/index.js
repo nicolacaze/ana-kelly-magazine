@@ -4,12 +4,14 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import HomeContentBlock from "../components/homeContentBlock"
 import Headline from "../components/headline"
+import Menu from "../components/menu"
 
 export default ({ data }) => {
   console.log(data);
   return (
     <Layout>
       <SEO title="home" />
+      <Menu />
       <Headline post={data.headline.edges[0].node} />
       <HomeContentBlock title='Créateurs' posts={data.designers} />
       <HomeContentBlock title='Rencontres' posts={data.encounters} />
