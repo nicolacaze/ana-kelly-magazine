@@ -2,20 +2,19 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import HomeContentBlock from "../components/homeContentBlock"
+import HomeSection from "../components/homeSection"
 import Headline from "../components/headline"
 import Menu from "../components/menu"
 
 export default ({ data }) => {
-  console.log(data);
   return (
     <Layout>
       <SEO title="home" />
       <Menu />
       <Headline post={data.headline.edges[0].node} />
-      <HomeContentBlock title='Créateurs' posts={data.designers} />
-      <HomeContentBlock title='Rencontres' posts={data.encounters} />
-      <HomeContentBlock title='Conseils' posts={data.advice} />
+      <HomeSection title='Créateurs' posts={data.designers} />
+      <HomeSection title='Rencontres' posts={data.encounters} />
+      <HomeSection title='Conseils' posts={data.advice} />
     </Layout>
   )
 }

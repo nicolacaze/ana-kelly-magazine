@@ -8,6 +8,7 @@ export default () => {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     padding: 0;
+    height: 3rem;
     margin-bottom: 4rem;
   `
 

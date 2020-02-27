@@ -31,7 +31,7 @@ const Layout = ({ children }) => {
   `
 
   const Main = styled.main`
-    max-width: 800px;
+    max-width: 960px;
     width: 100%;
     justify-self: center;
   `
