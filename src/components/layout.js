@@ -37,8 +37,11 @@ const Layout = ({ children }) => {
   `
 
   const Footer = styled.footer`
-    background-color: beige;
+    background-color: #000;
+    color: #fff;
+    opacity: 0.8;
     padding: 1rem 3rem;
+    text-align: center;
   `
 
   return (
