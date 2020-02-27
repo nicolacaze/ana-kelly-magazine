@@ -34,6 +34,7 @@ const Layout = ({ children }) => {
     max-width: 960px;
     width: 100%;
     justify-self: center;
+    padding: 0 2rem;
   `
 
   const Footer = styled.footer`

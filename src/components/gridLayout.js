@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 
 const gridLayout = ({ posts }) => {
-  
+
   const removeWPstyling = content => content.replace(/(style="[^"]+")|(class="[^"]+")/g,'');
 
   const Grid = styled.div`
@@ -15,6 +15,12 @@ const gridLayout = ({ posts }) => {
       text-decoration: none;
       color: #000;
     }
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr 1fr;
+     }
+    @media (max-width: 575px) {
+      grid-template-columns: 1fr;
+     }
   `
 
   const Article = styled.article`
