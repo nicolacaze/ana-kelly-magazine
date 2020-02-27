@@ -29,22 +29,22 @@ export default () => {
   return (
     <MenuContainer>
       <MenuItem>
-        <Link>
+        <Link to='/designers'>
           Créateurs
         </Link>
       </MenuItem>
       <MenuItem>
-        <Link>
+        <Link to='/encounters'>
           Rencontres
         </Link>
       </MenuItem>
       <MenuItem>
-        <Link>
+        <Link to='/advice'>
           Conseils
         </Link>
       </MenuItem>
       <MenuItem>
-        <Link>
+        <Link to='/about'>
           À propos
         </Link>
       </MenuItem>

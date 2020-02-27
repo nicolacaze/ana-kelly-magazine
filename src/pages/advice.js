@@ -20,7 +20,7 @@ export default ({ data }) => {
 
 export const pageQuery = graphql`
   query {
-    allWordpressPost(sort: {fields: [date], order: DESC}, filter: {categories: {elemMatch: {slug: {eq: "createurs"}}}}) {
+    allWordpressPost(sort: {fields: [date], order: DESC}, filter: {categories: {elemMatch: {slug: {eq: "conseils"}}}}) {
       edges {
         node {
           jetpack_featured_media_url
