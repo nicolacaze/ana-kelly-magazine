@@ -23,6 +23,7 @@ export const pageQuery = graphql`
     allWordpressPost(sort: {fields: [date], order: DESC}, filter: {categories: {elemMatch: {slug: {eq: "createurs"}}}}) {
       edges {
         node {
+          id
           jetpack_featured_media_url
           title
           excerpt

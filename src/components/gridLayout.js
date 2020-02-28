@@ -18,7 +18,7 @@ const gridLayout = ({ posts }) => {
     @media (max-width: 900px) {
       grid-template-columns: 1fr 1fr;
      }
-    @media (max-width: 575px) {
+    @media (max-width: 675px) {
       grid-template-columns: 1fr;
      }
   `
@@ -39,7 +39,7 @@ const gridLayout = ({ posts }) => {
     <Grid>
       {posts.map(({ node }) => {
         return (
-          <Link to={node.slug}>
+          <Link key={node.id} to={node.slug}>
             <Article>
               <Title>{node.title}</Title>
               <Img src={node.jetpack_featured_media_url} alt="" srcset=""/>

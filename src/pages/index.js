@@ -5,7 +5,6 @@ import SEO from "../components/seo"
 import HomeSection from "../components/homeSection"
 import Headline from "../components/headline"
 import Menu from "../components/menu"
-import '../components/layout.css'
 
 export default ({ data }) => {
   return (
