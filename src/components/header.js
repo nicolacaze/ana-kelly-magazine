@@ -4,16 +4,17 @@ import React from "react"
 import styled from 'styled-components'
 
 
+const SiteTitle = styled.header`
+  justify-self: center;
+  align-self: center;
+  a {
+    font-size: 3rem;
+    color: #000;
+    text-decoration: none;
+  }
+`
+
 const Header = ({ siteTitle }) => {
-  const SiteTitle = styled.header`
-    justify-self: center;
-    align-self: center;
-    a {
-      font-size: 3rem;
-      color: #000;
-      text-decoration: none;
-    }
-  `
   return (
     <SiteTitle>
       <div>

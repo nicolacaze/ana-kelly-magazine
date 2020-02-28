@@ -13,6 +13,27 @@ import { useStaticQuery, graphql } from "gatsby"
 import Header from "./header"
 import "./layout.css"
 
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 200px auto 200px;
+`
+
+const Main = styled.main`
+  max-width: 960px;
+  width: 100%;
+  justify-self: center;
+  padding: 0 2rem;
+`
+
+const Footer = styled.footer`
+  background-color: #000;
+  color: #fff;
+  opacity: 0.8;
+  padding: 1rem 3rem;
+  text-align: center;
+`
+
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
@@ -24,26 +45,6 @@ const Layout = ({ children }) => {
     }
   `)
 
-  const Grid = styled.div`
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 200px auto 200px;
-  `
-
-  const Main = styled.main`
-    max-width: 960px;
-    width: 100%;
-    justify-self: center;
-    padding: 0 2rem;
-  `
-
-  const Footer = styled.footer`
-    background-color: #000;
-    color: #fff;
-    opacity: 0.8;
-    padding: 1rem 3rem;
-    text-align: center;
-  `
 
   return (
     <Grid>

@@ -3,13 +3,13 @@ import { Link } from 'gatsby'
 import styled from 'styled-components'
 
 
-export default ({ post }) => {
+const HeadImage = styled.div`
+  background-image: url('${post.jetpack_featured_media_url}');
+  background-size: cover;
+  height: 350px;
+`
 
-  const HeadImage = styled.div`
-    background-image: url('${post.jetpack_featured_media_url}');
-    background-size: cover;
-    height: 350px;
-  `
+export default ({ post }) => {
 
   return (
     <section>
