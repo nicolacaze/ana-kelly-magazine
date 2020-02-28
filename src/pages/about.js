@@ -11,21 +11,20 @@ const Title = styled.h2`
   padding 0 0 1rem;
 `
 
-const about = props => {
-  console.log(props);
+export default ({ data }) => {
+
+  const removeWPstyling = content => content.replace(/(style="[^"]+")|(class="[^"]+")/g,'');
 
   return (
     <Layout>
       <SEO title="home" />
       <Menu />
-      <Title>À propos</Title>
+      <Title>{data.wordpressPage.title}</Title>
+      <div dangerouslySetInnerHTML={{ __html: removeWPstyling(data.wordpressPage.content) }} />
       
     </Layout>
   )
 }
-
-
-export default about
 
 export const pageQuery = graphql`
   query {
