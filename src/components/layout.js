@@ -9,9 +9,13 @@ import React from "react"
 import styled from 'styled-components'
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-
 import Header from "./header"
 import "./layout.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faFacebook } from '@fortawesome/free-brands-svg-icons'
+import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
 const Grid = styled.div`
   display: grid;
@@ -51,7 +55,15 @@ const Layout = ({ children }) => {
       <Header siteTitle={data.site.siteMetadata.title} />
       <Main>{children}</Main>
       <Footer>
-        © {new Date().getFullYear()}  - Ana Kelly Magazine - Tous droits réservés
+        <div>
+          <FontAwesomeIcon icon={faFacebook} size='2x'/>
+          <FontAwesomeIcon icon={faInstagram} size='2x'/>
+          <FontAwesomeIcon icon={faLinkedin} size='2x'/>
+          <FontAwesomeIcon icon={faEnvelope} size='2x'/>
+        
+
+        </div>
+        <p>© {new Date().getFullYear()}  - Ana Kelly Magazine - Tous droits réservés</p>
       </Footer>
     </Grid>
   )

@@ -3,6 +3,8 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Menu from "../components/menu"
+import  "./blog-post-styles.module.css"
+
 
 
 export default ({ data }) => {

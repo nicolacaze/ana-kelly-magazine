@@ -10,7 +10,7 @@ export default ({ data }) => {
  
   return (
     <Layout>
-      <SEO title="home" />
+      <SEO title="designers" />
       <Menu />
       <h1>Créateurs</h1>
       <GridLayout posts={data.allWordpressPost.edges}/>

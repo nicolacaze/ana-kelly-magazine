@@ -17,11 +17,10 @@ export default ({ data }) => {
 
   return (
     <Layout>
-      <SEO title="home" />
+      <SEO title="about" />
       <Menu />
       <Title>{data.wordpressPage.title}</Title>
       <div dangerouslySetInnerHTML={{ __html: removeWPstyling(data.wordpressPage.content) }} />
-      
     </Layout>
   )
 }
