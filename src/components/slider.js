@@ -1,10 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
+const DotLayout = styled.span`
+  padding: 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  border-radius: 50%;
+  background: ${props => props.active ? 'black' : 'white'};
+`
+const Dot = ({ active }) => (
+  <DotLayout active={active} />
+)
 
-const ArrowCSS = styled.div`
+const DotsLayout = styled.div`
+  position: absolute;
+  bottom: 25px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const Dots = ({ slides, activeIndex }) => (
+  <DotsLayout>
+    {slides.map((slide, i) => (
+      <Dot key={slide} active={activeIndex === i} />
+    ))}
+  </DotsLayout>
+)
+
+const ArrowLayout = styled.div`
   display: flex;
   position: absolute;
   top: 50%;
@@ -29,12 +56,12 @@ const ArrowCSS = styled.div`
 `
 
 const Arrow = ({ direction, handleClick }) => (
-  <ArrowCSS direction={direction} onClick={handleClick} >
+  <ArrowLayout direction={direction} onClick={handleClick} >
     {direction === 'right' ? <FontAwesomeIcon icon={faChevronRight} size="1x"/> : <FontAwesomeIcon icon={faChevronLeft} size="1x"/>}
-  </ArrowCSS>
+  </ArrowLayout>
 )
 
-const SlideCSS = styled.div`
+const SlideLayout = styled.div`
   width: ${props => props.width}px;
   background-image: url('${props => props.content}');
   background-size: cover;
@@ -43,9 +70,7 @@ const SlideCSS = styled.div`
 `
   
 const Slide = ({ content, width }) => (
-  <SlideCSS content={content} width={width} >
-
-  </SlideCSS>
+  <SlideLayout content={content} width={width} />
 )
 
 const SliderContent = styled.div`
@@ -59,7 +84,7 @@ const SliderContent = styled.div`
   width: 100%;
 `
 
-const SliderCSS = styled.div`
+const SliderLayout = styled.div`
   position: relative;
   height: 400px;
   width: 100%;
@@ -76,6 +101,7 @@ const Slider = props => {
   })
   
   const { activeIndex, translate, transition } = state
+  const autoPlayRef = useRef()
 
   const nextSlide = () => {
     if (activeIndex === props.slides.length - 1) {
@@ -108,9 +134,22 @@ const Slider = props => {
       translate: (activeIndex - 1) * getWidth()
     })
   }
+
+  useEffect(() => {
+    autoPlayRef.current = nextSlide
+  })
+
+  useEffect(() => {
+    const play = () => {
+      autoPlayRef.current()
+    }
+
+    const interval = setInterval(play, props.autoPlay * 1000)
+    return () => clearInterval(interval);
+  }, [])
   
   return (
-    <SliderCSS>
+    <SliderLayout>
       <SliderContent
       translate={translate}
       transition={transition}
@@ -123,8 +162,14 @@ const Slider = props => {
       </SliderContent>
       <Arrow direction="left" handleClick={prevSlide} />
       <Arrow direction="right" handleClick={nextSlide} />
-    </SliderCSS>
+      <Dots slides={props.slides} activeIndex={activeIndex} />
+    </SliderLayout>
   )
+}
+
+Slider.defaultProps = {
+  slides: [],
+  autoPlay: null
 }
 
 export default Slider
