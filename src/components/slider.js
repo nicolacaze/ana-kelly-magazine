@@ -23,10 +23,10 @@ const DotsLayout = styled.div`
   justify-content: center;
 `
 
-const Dots = ({ slides, activeIndex }) => (
+const Dots = ({ slides, activeSlide }) => (
   <DotsLayout>
     {slides.map((slide, i) => (
-      <Dot key={slide} active={activeIndex === i} />
+      <Dot key={slide} active={activeSlide === i} />
     ))}
   </DotsLayout>
 )
@@ -95,43 +95,43 @@ const SliderLayout = styled.div`
 const Slider = props => {
   const getWidth = () => window.innerWidth
   const [state, setState] = useState({
-    activeIndex: 0,
+    activeSlide: 0,
     translate: 0,
     transition: 0.45,
   })
   
-  const { activeIndex, translate, transition } = state
+  const { activeSlide, translate, transition } = state
   const autoPlayRef = useRef()
 
   const nextSlide = () => {
-    if (activeIndex === props.slides.length - 1) {
+    if (activeSlide === props.slides.length - 1) {
       return setState({
         ...state,
         translate: 0,
-        activeIndex: 0
+        activeSlide: 0
       })
     }
 
     setState({
       ...state,
-      activeIndex: activeIndex + 1,
-      translate: (activeIndex + 1) * getWidth()
+      activeSlide: activeSlide + 1,
+      translate: (activeSlide + 1) * getWidth()
     })
   }
 
   const prevSlide = () => {
-    if (activeIndex === 0) {
+    if (activeSlide === 0) {
       return setState({
         ...state,
         translate: (props.slides.length - 1) * getWidth(),
-        activeIndex: props.slides.length - 1
+        activeSlide: props.slides.length - 1
       })
     }
 
     setState({
       ...state,
-      activeIndex: activeIndex - 1,
-      translate: (activeIndex - 1) * getWidth()
+      activeSlide: activeSlide - 1,
+      translate: (activeSlide - 1) * getWidth()
     })
   }
 
@@ -162,7 +162,7 @@ const Slider = props => {
       </SliderContent>
       <Arrow direction="left" handleClick={prevSlide} />
       <Arrow direction="right" handleClick={nextSlide} />
-      <Dots slides={props.slides} activeIndex={activeIndex} />
+      <Dots slides={props.slides} activeSlide={activeSlide} />
     </SliderLayout>
   )
 }
