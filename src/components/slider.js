@@ -78,35 +78,24 @@ const Slider = props => {
   const { activeIndex, translate, transition } = state
 
   const nextSlide = () => {
-    if (activeIndex === props.slides.length - 1) {
+    if (activeIndex !== props.slides.length - 1) {
       return setState({
         ...state,
-        translate: 0,
-        activeIndex: 0
+        activeIndex: activeIndex + 1,
+        translate: (activeIndex + 1) * getWidth()
       })
     }
 
-    setState({
-      ...state,
-      activeIndex: activeIndex + 1,
-      translate: (activeIndex + 1) * getWidth()
-    })
   }
 
   const prevSlide = () => {
-    if (activeIndex === 0) {
+    if (activeIndex !== 0) {
       return setState({
         ...state,
-        translate: (props.slides.length - 1) * getWidth(),
-        activeIndex: props.slides.length - 1
+        activeIndex: activeIndex - 1,
+        translate: (activeIndex - 1) * getWidth()
       })
     }
-
-    setState({
-      ...state,
-      activeIndex: activeIndex - 1,
-      translate: (activeIndex - 1) * getWidth()
-    })
   }
   
   return (
