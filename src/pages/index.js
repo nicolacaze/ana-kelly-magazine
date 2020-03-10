@@ -94,7 +94,7 @@ export default ({ data }) => {
     <Layout>
       <SEO title="home" />
       <Menu />
-      <Slider slides={data.designers.edges} autoPlay={5} />
+      <Slider slides={data.designers.edges} autoPlay={null} />
       <Headline post={data.headline.edges[0].node} />
       <HomeSection title='Créateurs' posts={data.designers} />
       <HomeSection title='Rencontres' posts={data.encounters} />

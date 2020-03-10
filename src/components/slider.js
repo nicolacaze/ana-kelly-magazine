@@ -91,20 +91,87 @@ const SliderLayout = styled.div`
   margin: 0 auto;
   overflow: hidden;
 `
+const getWidth = () => window.innerWidth
 
-const Slider = props => {
-  const getWidth = () => window.innerWidth
+const Slider = ({ slides, autoPlay }) => {
+
+  const firstSlide = slides[0]
+  const secondSlide = slides[1]
+  const lastSlide = slides[slides.length - 1]
+
   const [state, setState] = useState({
     activeSlide: 0,
-    translate: 0,
+    translate: getWidth(),
     transition: 0.45,
+    _slides: [lastSlide, firstSlide, secondSlide],
   })
   
-  const { activeSlide, translate, transition } = state
+  const { activeSlide, translate, transition, _slides } = state
+
   const autoPlayRef = useRef()
+  const transitionRef = useRef()
+  const resizeRef = useRef()
+
+  useEffect(() => {
+    autoPlayRef.current = nextSlide
+    transitionRef.current = smoothTransition
+    resizeRef.current = handleResize
+  })
+
+  useEffect(() => {
+    const play = () => {
+      autoPlayRef.current()
+    }
+
+    const smooth = (e) => {
+      if (e.target.className.includes('SliderContent')) {
+        transitionRef.current()
+      }
+    }
+
+    const resize = () => {
+      resizeRef.current()
+    }
+
+    // const interval = setInterval(play, autoPlay * 1000)
+    const transitionEnd = window.addEventListener('transitionend', smooth)
+    const onResize = window.addEventListener('resize', resize)
+    return () => {
+      // clearInterval(interval)
+      window.removeEventListener('transitionend', transitionEnd)
+      window.removeEventListener('resize', onResize)
+    }
+  }, [])
+
+  useEffect(() => {
+    if(transition === 0) setState({ ...state, transition: 0.45 })
+  }, [transition, state])
+
+  const smoothTransition = () => {
+    let _slides = []
+
+    if(activeSlide === slides.length - 1) {
+      _slides = [slides[slides.length - 2], lastSlide, firstSlide]
+    } else if(activeSlide === 0) {
+      _slides = [lastSlide, firstSlide, secondSlide]
+    } else {
+      _slides = slides.slice(activeSlide - 1, activeSlide + 2)
+    }
+
+    setState({
+      ...state,
+      _slides,
+      transition: 0,
+      translate: getWidth(),
+    })
+  }
+
+  const handleResize = () => {
+    setState({ ...state, translate: getWidth(), transition: 0 })
+  }
 
   const nextSlide = () => {
-    if (activeSlide === props.slides.length - 1) {
+    if (activeSlide === slides.length - 1) {
       return setState({
         ...state,
         translate: 0,
@@ -123,8 +190,8 @@ const Slider = props => {
     if (activeSlide === 0) {
       return setState({
         ...state,
-        translate: (props.slides.length - 1) * getWidth(),
-        activeSlide: props.slides.length - 1
+        translate: (slides.length - 1) * getWidth(),
+        activeSlide: slides.length - 1
       })
     }
 
@@ -134,35 +201,26 @@ const Slider = props => {
       translate: (activeSlide - 1) * getWidth()
     })
   }
-
-  useEffect(() => {
-    autoPlayRef.current = nextSlide
-  })
-
-  useEffect(() => {
-    const play = () => {
-      autoPlayRef.current()
-    }
-
-    const interval = setInterval(play, props.autoPlay * 1000)
-    return () => clearInterval(interval);
-  }, [])
   
   return (
     <SliderLayout>
       <SliderContent
       translate={translate}
       transition={transition}
-      width={getWidth()}
-      length={props.slides.length}
+      width={getWidth() * _slides.length}
+      length={_slides.length}
       >
-        {props.slides.map((slide, i) => (
+        {_slides.map((slide, i) => (
           <Slide key={slide + i} content={slide.node.jetpack_featured_media_url} width={getWidth()} />
           ))}
       </SliderContent>
-      <Arrow direction="left" handleClick={prevSlide} />
-      <Arrow direction="right" handleClick={nextSlide} />
-      <Dots slides={props.slides} activeSlide={activeSlide} />
+      {!autoPlay && (
+        <>
+          <Arrow direction="left" handleClick={prevSlide} />
+          <Arrow direction="right" handleClick={nextSlide} />
+        </>
+      )}
+      <Dots slides={slides} activeSlide={activeSlide} />
     </SliderLayout>
   )
 }
