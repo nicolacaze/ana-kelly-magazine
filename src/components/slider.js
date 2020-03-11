@@ -49,16 +49,18 @@ const Slide = ({ content, width }) => (
   </SlideCSS>
 )
 
-const SliderContent = styled.div`
-  transform: translateX(-${props => props.translate}px);
+const SliderContent = styled.ul`
+  --slideSize: calc((100% - 2rem) / 3);
+  --gridGap: 1rem;
+  transform: translateX(calc(-${props => props.index} * var(--slideSize) - ${props => props.index} * var(--gridGap)));
   transition: transform ease-out ${props => props.transition}s;
   height: 100%;
-  display: grid;
-  grid-template-columns: repeat(${props => props.length}, calc((100% - 2rem) / 3));
-  grid-template-rows: auto;
-  grid-column-gap: 1rem;
-  margin: 0;
   width: 100%;
+  display: grid;
+  grid-template-columns: repeat(${props => props.length}, var(--slideSize));
+  grid-template-rows: auto;
+  grid-column-gap: var(--gridGap);
+  margin: 0;
 `
 
 const SliderCSS = styled.div`
@@ -82,29 +84,28 @@ const FeaturedImage = styled.img`
 `
 
 const Slider = props => {
-  const getWidth = () => window.innerWidth
+  
   const [state, setState] = useState({
-    translate: 0,
+    index: 0,
     transition: 0.45,
-    totalWidth: (props.slides.length - 1) * 416,
   })
   
-  const { translate, transition, totalWidth } = state
+  const { index, transition } = state
 
   const nextSlide = () => {
-    if (translate < totalWidth) {
+    if (index < props.slides.length - 3) {
       setState({
         ...state,
-        translate: translate + getWidth()
+        index: index + 1,
       })
     }
   }
 
   const prevSlide = () => {
-    if (translate > 0) {
+    if (index > 0) {
       setState({
         ...state,
-        translate: translate - getWidth()
+        index: index - 1,
       })
     }
   }
@@ -112,9 +113,8 @@ const Slider = props => {
   return (
     <SliderCSS>
       <SliderContent
-      translate={translate}
+      index={index}
       transition={transition}
-      width={getWidth()}
       length={props.slides.length}
       >
         {props.slides.map(({ node }) => (
