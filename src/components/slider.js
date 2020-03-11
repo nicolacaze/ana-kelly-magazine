@@ -82,7 +82,7 @@ const FeaturedImage = styled.img`
   width: 100%;
 `
 
-const Slider = props => {
+const Slider = ({ posts }) => {
 
   const [state, setState] = useState({
     index: 0,
@@ -92,7 +92,7 @@ const Slider = props => {
   const { index, transition } = state
 
   const nextSlide = () => {
-    if (index < props.slides.length - 3) {
+    if (index < posts.length - 3) {
       setState({
         ...state,
         index: index + 1,
@@ -112,11 +112,10 @@ const Slider = props => {
   return (
     <SliderCSS>
       <SliderContent
-      index={index}
-      transition={transition}
-      length={props.slides.length}
-      >
-        {props.slides.map(({ node }) => (
+        index={index}
+        transition={transition}
+        length={posts.length}>
+        {posts.map(({ node }) => (
           <PostContainer key={node.id}>
             <Link to={node.slug}>
               <FeaturedImage src={node.jetpack_featured_media_url} alt="Post featured" />
