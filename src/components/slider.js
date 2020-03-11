@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { Link } from 'gatsby'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
@@ -53,8 +54,9 @@ const SliderContent = styled.div`
   transition: transform ease-out ${props => props.transition}s;
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(${props => props.length}, auto);
+  grid-template-columns: repeat(${props => props.length}, calc((100% - 2rem) / 3));
   grid-template-rows: auto;
+  grid-column-gap: 1rem;
   margin: 0;
   width: 100%;
 `
@@ -67,33 +69,42 @@ const SliderCSS = styled.div`
   overflow: hidden;
 `
 
+const PostContainer = styled.li`
+  list-style: none;
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+`
+
+const FeaturedImage = styled.img`
+  width: 100%;
+`
+
 const Slider = props => {
   const getWidth = () => window.innerWidth
   const [state, setState] = useState({
-    activeIndex: 0,
     translate: 0,
     transition: 0.45,
+    totalWidth: (props.slides.length - 1) * 416,
   })
   
-  const { activeIndex, translate, transition } = state
+  const { translate, transition, totalWidth } = state
 
   const nextSlide = () => {
-    if (activeIndex !== props.slides.length - 1) {
-      return setState({
+    if (translate < totalWidth) {
+      setState({
         ...state,
-        activeIndex: activeIndex + 1,
-        translate: (activeIndex + 1) * getWidth()
+        translate: translate + getWidth()
       })
     }
-
   }
 
   const prevSlide = () => {
-    if (activeIndex !== 0) {
-      return setState({
+    if (translate > 0) {
+      setState({
         ...state,
-        activeIndex: activeIndex - 1,
-        translate: (activeIndex - 1) * getWidth()
+        translate: translate - getWidth()
       })
     }
   }
@@ -106,8 +117,14 @@ const Slider = props => {
       width={getWidth()}
       length={props.slides.length}
       >
-        {props.slides.map((slide, i) => (
-          <Slide key={slide + i} content={slide.node.jetpack_featured_media_url} width={getWidth()} />
+        {props.slides.map(({ node }) => (
+          // <Slide key={slide + i} content={slide.node.jetpack_featured_media_url} width={getWidth()} />
+          <PostContainer key={node.id}>
+            <Link to={node.slug}>
+              <FeaturedImage src={node.jetpack_featured_media_url} alt="Post featured" />
+              <h4>{node.title}</h4>
+            </Link>
+          </PostContainer>
           ))}
       </SliderContent>
       <Arrow direction="left" handleClick={prevSlide} />
