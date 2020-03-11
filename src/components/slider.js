@@ -35,20 +35,6 @@ const Arrow = ({ direction, handleClick }) => (
   </ArrowCSS>
 )
 
-const SlideCSS = styled.div`
-  width: ${props => props.width}px;
-  background-image: url('${props => props.content}');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-`
-  
-const Slide = ({ content, width }) => (
-  <SlideCSS content={content} width={width} >
-
-  </SlideCSS>
-)
-
 const SliderContent = styled.ul`
   --slideSize: calc((100% - 2rem) / 3);
   --gridGap: 1rem;
@@ -65,7 +51,7 @@ const SliderContent = styled.ul`
 
 const SliderCSS = styled.div`
   position: relative;
-  height: 400px;
+  height: 300px;
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
@@ -84,7 +70,7 @@ const FeaturedImage = styled.img`
 `
 
 const Slider = props => {
-  
+
   const [state, setState] = useState({
     index: 0,
     transition: 0.45,
@@ -118,7 +104,6 @@ const Slider = props => {
       length={props.slides.length}
       >
         {props.slides.map(({ node }) => (
-          // <Slide key={slide + i} content={slide.node.jetpack_featured_media_url} width={getWidth()} />
           <PostContainer key={node.id}>
             <Link to={node.slug}>
               <FeaturedImage src={node.jetpack_featured_media_url} alt="Post featured" />
