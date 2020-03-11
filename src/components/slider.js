@@ -27,6 +27,9 @@ const ArrowCSS = styled.div`
       outline: 0;
     }
   }
+  @media (max-width: 900px) {
+    display: none;
+  }
 `
 
 const Arrow = ({ direction, handleClick }) => (
@@ -47,6 +50,16 @@ const SliderContent = styled.ul`
   grid-template-rows: auto;
   grid-column-gap: var(--gridGap);
   margin: 0;
+  @media (max-width: 900px) {
+    overflow: hidden;
+    overflow-x: scroll;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+    scrollbar-width: none;
+    ::-webkit-scrollbar {
+      display: none;  /* Remove scrollbar space */
+    }
+  }
 `
 
 const SliderCSS = styled.div`
