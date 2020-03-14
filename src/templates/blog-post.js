@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Menu from "../components/menu"
-import dompurify from 'dompurify'
+import DOMPurify from 'dompurify'
 
 const BlogPostLayout = styled.div`
   figure {
@@ -37,20 +37,22 @@ const BlogPostLayout = styled.div`
   }
 `
 
+const { sanitize } = DOMPurify;
+DOMPurify.setConfig({
+  FORBID_ATTR: ['style', 'class'],
+  FORBID_TAGS: ['br']
+});
+
+DOMPurify.addHook('uponSanitizeElement', node => {
+  if(node.nodeName === 'DIV') {
+    console.log(node.classList);
+    node.classList.add('blog-post__paragraph');
+  }
+  return node.innerHTML === '&nbsp;' ? node.remove() : node;
+});
+
 export default ({ data }) => {
   const post = data.allWordpressPost.edges[0].node;
-  const { sanitize } = dompurify;
-  dompurify.setConfig({
-    FORBID_ATTR: ['style', 'class'],
-    FORBID_TAGS: ['br']
-  });
-  DOMPurify.addHook('uponSanitizeElement', node => {
-    if(node.nodeName === 'DIV') {
-      console.log(node.classList);
-      node.classList.add('blog-post__paragraph');
-    }
-    return node.innerHTML === '&nbsp;' ? node.remove() : node;
-  });
 
   return (
     <Layout>
@@ -65,6 +67,7 @@ export default ({ data }) => {
     </Layout>
   )
 }
+
 export const query = graphql`
   query($slug: String!) {
     allWordpressPost(filter: { slug: { eq: $slug } }) {
