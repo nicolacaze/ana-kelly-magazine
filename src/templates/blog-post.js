@@ -8,12 +8,32 @@ import DOMPurify from 'dompurify'
 
 const BlogPostLayout = styled.div`
   figure {
-    width: 80%;
-    margin: 2rem auto;
+    display: flex;
+    img {
+      width: 80%;
+      margin: 2rem auto;
+    }
+
+    blockquote {
+      margin: 0;
+    }
   }
-  img {
-    width: 100%;
-    height: auto;
+
+  div {
+    margin: 1rem 0;
+    a {
+      display: inline-block;
+      text-decoration: none;
+      color: #000;
+      border: 2px solid #000;
+      border-radius: 1rem;
+      padding: 0.8rem 1rem;
+      transition: all ease-out 0.2s;
+      &:hover {
+        background-color: #000;
+        color: #fff;
+      }
+    }
   }
 `
 
@@ -24,7 +44,13 @@ export default ({ data }) => {
     FORBID_ATTR: ['style', 'class'],
     FORBID_TAGS: ['br']
   });
-  DOMPurify.addHook('uponSanitizeElement', node => node.innerHTML === '&nbsp;' ? node.remove() : node);
+  DOMPurify.addHook('uponSanitizeElement', node => {
+    if(node.nodeName === 'DIV') {
+      console.log(node.classList);
+      node.classList.add('blog-post__paragraph');
+    }
+    return node.innerHTML === '&nbsp;' ? node.remove() : node;
+  });
 
   return (
     <Layout>
