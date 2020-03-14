@@ -38,10 +38,6 @@ const BlogPostLayout = styled.div`
 `
 
 const { sanitize } = DOMPurify;
-DOMPurify.setConfig({
-  FORBID_ATTR: ['style', 'class'],
-  FORBID_TAGS: ['br']
-});
 
 DOMPurify.addHook('uponSanitizeElement', node => {
   if(node.nodeName === 'DIV') {
@@ -61,7 +57,10 @@ export default ({ data }) => {
         <Menu />
         <div>
           <h1>{post.title}</h1>
-          <div dangerouslySetInnerHTML={{ __html: sanitize(post.content) }} />
+          <div dangerouslySetInnerHTML={{ __html: sanitize(post.content, {
+            FORBID_ATTR: ['style', 'class'],
+            FORBID_TAGS: ['br']
+          })}} />
         </div>
       </BlogPostLayout>
     </Layout>
