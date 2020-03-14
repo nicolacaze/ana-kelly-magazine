@@ -37,15 +37,19 @@ const BlogPostLayout = styled.div`
   }
 `
 
-const { sanitize } = DOMPurify;
+// const { sanitize } = DOMPurify;
+// DOMPurify.setConfig({
+//   FORBID_ATTR: ['style', 'class'],
+//   FORBID_TAGS: ['br']
+// });
 
-DOMPurify.addHook('uponSanitizeElement', node => {
-  if(node.nodeName === 'DIV') {
-    console.log(node.classList);
-    node.classList.add('blog-post__paragraph');
-  }
-  return node.innerHTML === '&nbsp;' ? node.remove() : node;
-});
+// DOMPurify.addHook('uponSanitizeElement', node => {
+//   if(node.nodeName === 'DIV') {
+//     console.log(node.classList);
+//     node.classList.add('blog-post__paragraph');
+//   }
+//   return node.innerHTML === '&nbsp;' ? node.remove() : node;
+// });
 
 export default ({ data }) => {
   const post = data.allWordpressPost.edges[0].node;
@@ -57,10 +61,7 @@ export default ({ data }) => {
         <Menu />
         <div>
           <h1>{post.title}</h1>
-          <div dangerouslySetInnerHTML={{ __html: sanitize(post.content, {
-            FORBID_ATTR: ['style', 'class'],
-            FORBID_TAGS: ['br']
-          })}} />
+          <div dangerouslySetInnerHTML={{ __html: sanitize(post.content) }} />
         </div>
       </BlogPostLayout>
     </Layout>
