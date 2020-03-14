@@ -4,17 +4,27 @@ import styled from 'styled-components'
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Menu from "../components/menu"
+import DOMPurify from 'dompurify'
 
 const BlogPostLayout = styled.div`
-  img {
+  figure {
     width: 80%;
+    margin: 2rem auto;
+  }
+  img {
+    width: 100%;
     height: auto;
   }
 `
 
 export default ({ data }) => {
   const post = data.allWordpressPost.edges[0].node;
-  const removeWPstyling = content => content.replace(/(style="[^"]+")|(class="[^"]+")/g,'');
+  const { sanitize } = DOMPurify;
+  DOMPurify.setConfig({
+    FORBID_ATTR: ['style', 'class'],
+    FORBID_TAGS: ['br']
+  });
+  DOMPurify.addHook('uponSanitizeElement', node => node.innerHTML === '&nbsp;' ? node.remove() : node);
 
   return (
     <Layout>
@@ -23,7 +33,7 @@ export default ({ data }) => {
         <Menu />
         <div>
           <h1>{post.title}</h1>
-          <div dangerouslySetInnerHTML={{ __html: removeWPstyling(post.content) }} />
+          <div dangerouslySetInnerHTML={{ __html: sanitize(post.content) }} />
         </div>
       </BlogPostLayout>
     </Layout>
