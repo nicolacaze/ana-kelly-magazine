@@ -124,13 +124,8 @@ const Slider = ({ posts }) => {
           </PostContainer>
           ))}
       </SliderContent>
-      {!autoPlay && (
-        <>
-          <Arrow direction="left" handleClick={prevSlide} />
-          <Arrow direction="right" handleClick={nextSlide} />
-        </>
-      )}
-      <Dots slides={slides} activeSlide={activeSlide} />
+      <Arrow direction="left" handleClick={prevSlide} />
+      <Arrow direction="right" handleClick={nextSlide} />
     </SliderLayout>
   )
 }
