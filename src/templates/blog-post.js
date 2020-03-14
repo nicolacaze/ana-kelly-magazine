@@ -61,7 +61,7 @@ export default ({ data }) => {
         <Menu />
         <div>
           <h1>{post.title}</h1>
-          <div dangerouslySetInnerHTML={{ __html: sanitize(post.content) }} />
+          <div dangerouslySetInnerHTML={{ __html: post.content }} />
         </div>
       </BlogPostLayout>
     </Layout>
