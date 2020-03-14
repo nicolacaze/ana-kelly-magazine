@@ -1,11 +1,16 @@
 import React from "react"
 import { graphql } from "gatsby"
+import styled from 'styled-components'
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Menu from "../components/menu"
-import  "./blog-post-styles.module.css"
 
-
+const BlogPostLayout = styled.div`
+  img {
+    width: 80%;
+    height: auto;
+  }
+`
 
 export default ({ data }) => {
   const post = data.allWordpressPost.edges[0].node;
@@ -13,12 +18,14 @@ export default ({ data }) => {
 
   return (
     <Layout>
-      <SEO title="home" />
-      <Menu />
-      <div>
-        <h1>{post.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: removeWPstyling(post.content) }} />
-      </div>
+      <BlogPostLayout>
+        <SEO title="home" />
+        <Menu />
+        <div>
+          <h1>{post.title}</h1>
+          <div dangerouslySetInnerHTML={{ __html: removeWPstyling(post.content) }} />
+        </div>
+      </BlogPostLayout>
     </Layout>
   )
 }
