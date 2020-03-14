@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Menu from "../components/menu"
-import DOMPurify from 'dompurify'
+import dompurify from 'dompurify'
 
 const BlogPostLayout = styled.div`
   figure {
@@ -39,8 +39,8 @@ const BlogPostLayout = styled.div`
 
 export default ({ data }) => {
   const post = data.allWordpressPost.edges[0].node;
-  const { sanitize } = DOMPurify;
-  DOMPurify.setConfig({
+  const { sanitize } = dompurify;
+  dompurify.setConfig({
     FORBID_ATTR: ['style', 'class'],
     FORBID_TAGS: ['br']
   });
