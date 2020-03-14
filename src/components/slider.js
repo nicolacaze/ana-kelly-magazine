@@ -1,35 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { Link } from 'gatsby'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
-const DotLayout = styled.span`
-  padding: 10px;
-  margin-right: 5px;
-  cursor: pointer;
-  border-radius: 50%;
-  background: ${props => props.active ? 'black' : 'white'};
-`
-const Dot = ({ active }) => (
-  <DotLayout active={active} />
-)
-
-const DotsLayout = styled.div`
-  position: absolute;
-  bottom: 25px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const Dots = ({ slides, activeSlide }) => (
-  <DotsLayout>
-    {slides.map((slide, i) => (
-      <Dot key={slide} active={activeSlide === i} />
-    ))}
-  </DotsLayout>
-)
 
 const ArrowLayout = styled.div`
   display: flex;
@@ -53,6 +27,9 @@ const ArrowLayout = styled.div`
       outline: 0;
     }
   }
+  @media (max-width: 900px) {
+    display: none;
+  }
 `
 
 const Arrow = ({ direction, handleClick }) => (
@@ -61,157 +38,90 @@ const Arrow = ({ direction, handleClick }) => (
   </ArrowLayout>
 )
 
-const SlideLayout = styled.div`
-  width: ${props => props.width}px;
-  background-image: url('${props => props.content}');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-`
-  
-const Slide = ({ content, width }) => (
-  <SlideLayout content={content} width={width} />
-)
-
-const SliderContent = styled.div`
-  transform: translateX(-${props => props.translate}px);
+const SliderContent = styled.ul`
+  --slideSize: calc((100% - 2rem) / 3);
+  --gridGap: 1rem;
+  transform: translateX(calc(-${props => props.index} * var(--slideSize) - ${props => props.index} * var(--gridGap)));
   transition: transform ease-out ${props => props.transition}s;
   height: 100%;
-  display: grid;
-  grid-template-columns: repeat(${props => props.length}, auto);
-  grid-template-rows: auto;
-  margin: 0;
   width: 100%;
+  display: grid;
+  grid-template-columns: repeat(${props => props.length}, var(--slideSize));
+  grid-template-rows: auto;
+  grid-column-gap: var(--gridGap);
+  margin: 0;
+  @media (max-width: 900px) {
+    overflow: hidden;
+    overflow-x: scroll;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+    scrollbar-width: none;
+    ::-webkit-scrollbar {
+      display: none;  /* Remove scrollbar space */
+    }
+  }
 `
 
 const SliderLayout = styled.div`
   position: relative;
-  height: 400px;
+  height: 300px;
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
 `
-const getWidth = () => window.innerWidth
 
-const Slider = ({ slides, autoPlay }) => {
+const PostContainer = styled.li`
+  list-style: none;
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+`
 
-  const firstSlide = slides[0]
-  const secondSlide = slides[1]
-  const lastSlide = slides[slides.length - 1]
+const FeaturedImage = styled.img`
+  width: 100%;
+`
+
+const Slider = ({ posts }) => {
 
   const [state, setState] = useState({
-    activeSlide: 0,
-    translate: getWidth(),
+    index: 0,
     transition: 0.45,
-    _slides: [lastSlide, firstSlide, secondSlide],
   })
   
-  const { activeSlide, translate, transition, _slides } = state
-
-  const autoPlayRef = useRef()
-  const transitionRef = useRef()
-  const resizeRef = useRef()
-
-  useEffect(() => {
-    autoPlayRef.current = nextSlide
-    transitionRef.current = smoothTransition
-    resizeRef.current = handleResize
-  })
-
-  useEffect(() => {
-    const play = () => {
-      autoPlayRef.current()
-    }
-
-    const smooth = (e) => {
-      if (e.target.className.includes('SliderContent')) {
-        transitionRef.current()
-      }
-    }
-
-    const resize = () => {
-      resizeRef.current()
-    }
-
-    // const interval = setInterval(play, autoPlay * 1000)
-    const transitionEnd = window.addEventListener('transitionend', smooth)
-    const onResize = window.addEventListener('resize', resize)
-    return () => {
-      // clearInterval(interval)
-      window.removeEventListener('transitionend', transitionEnd)
-      window.removeEventListener('resize', onResize)
-    }
-  }, [])
-
-  useEffect(() => {
-    if(transition === 0) setState({ ...state, transition: 0.45 })
-  }, [transition, state])
-
-  const smoothTransition = () => {
-    let _slides = []
-
-    if(activeSlide === slides.length - 1) {
-      _slides = [slides[slides.length - 2], lastSlide, firstSlide]
-    } else if(activeSlide === 0) {
-      _slides = [lastSlide, firstSlide, secondSlide]
-    } else {
-      _slides = slides.slice(activeSlide - 1, activeSlide + 2)
-    }
-
-    setState({
-      ...state,
-      _slides,
-      transition: 0,
-      translate: getWidth(),
-    })
-  }
-
-  const handleResize = () => {
-    setState({ ...state, translate: getWidth(), transition: 0 })
-  }
+  const { index, transition } = state
 
   const nextSlide = () => {
-    if (activeSlide === slides.length - 1) {
-      return setState({
+    if (index < posts.length - 3) {
+      setState({
         ...state,
-        translate: 0,
-        activeSlide: 0
+        index: index + 1,
       })
     }
-
-    setState({
-      ...state,
-      activeSlide: activeSlide + 1,
-      translate: (activeSlide + 1) * getWidth()
-    })
   }
 
   const prevSlide = () => {
-    if (activeSlide === 0) {
-      return setState({
+    if (index > 0) {
+      setState({
         ...state,
-        translate: (slides.length - 1) * getWidth(),
-        activeSlide: slides.length - 1
+        index: index - 1,
       })
     }
-
-    setState({
-      ...state,
-      activeSlide: activeSlide - 1,
-      translate: (activeSlide - 1) * getWidth()
-    })
   }
   
   return (
     <SliderLayout>
       <SliderContent
-      translate={translate}
-      transition={transition}
-      width={getWidth() * _slides.length}
-      length={_slides.length}
-      >
-        {_slides.map((slide, i) => (
-          <Slide key={slide + i} content={slide.node.jetpack_featured_media_url} width={getWidth()} />
+        index={index}
+        transition={transition}
+        length={posts.length}>
+        {posts.map(({ node }) => (
+          <PostContainer key={node.id}>
+            <Link to={node.slug}>
+              <FeaturedImage src={node.jetpack_featured_media_url} alt="Post featured" />
+              <h4>{node.title}</h4>
+            </Link>
+          </PostContainer>
           ))}
       </SliderContent>
       {!autoPlay && (
@@ -226,8 +136,7 @@ const Slider = ({ slides, autoPlay }) => {
 }
 
 Slider.defaultProps = {
-  slides: [],
-  autoPlay: null
+  posts: [],
 }
 
 export default Slider

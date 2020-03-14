@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
+import DOMPurify from 'dompurify'
+
 
 const Grid = styled.div`
   display: grid;
@@ -33,7 +35,11 @@ const Img = styled.img`
 
 const gridLayout = ({ posts }) => {
 
-  const removeWPstyling = content => content.replace(/(style="[^"]+")|(class="[^"]+")/g,'');
+  const { sanitize } = DOMPurify;
+  DOMPurify.setConfig({
+    FORBID_ATTR: ['style', 'class'],
+    FORBID_TAGS: ['br']
+  });
 
   return (
     <Grid>
@@ -43,7 +49,7 @@ const gridLayout = ({ posts }) => {
             <Article>
               <Title>{node.title}</Title>
               <Img src={node.jetpack_featured_media_url} alt="" srcset=""/>
-              <div dangerouslySetInnerHTML={{ __html: removeWPstyling(node.excerpt) }} />
+              <div dangerouslySetInnerHTML={{ __html: sanitize(node.excerpt) }} />
             </Article>
           </Link>
         )
