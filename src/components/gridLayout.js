@@ -33,13 +33,14 @@ const Img = styled.img`
   width: 100%;
 `
 
+// const { sanitize } = DOMPurify;
+// DOMPurify.setConfig({
+//   FORBID_ATTR: ['style', 'class'],
+//   FORBID_TAGS: ['br']
+// });
+
 const gridLayout = ({ posts }) => {
 
-  const { sanitize } = DOMPurify;
-  DOMPurify.setConfig({
-    FORBID_ATTR: ['style', 'class'],
-    FORBID_TAGS: ['br']
-  });
 
   return (
     <Grid>
@@ -49,7 +50,7 @@ const gridLayout = ({ posts }) => {
             <Article>
               <Title>{node.title}</Title>
               <Img src={node.jetpack_featured_media_url} alt="" srcset=""/>
-              <div dangerouslySetInnerHTML={{ __html: sanitize(node.excerpt) }} />
+              <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
             </Article>
           </Link>
         )
