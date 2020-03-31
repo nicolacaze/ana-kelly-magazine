@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Slider from "../components/slider"
+import SideDrawer from "../components/sideDrawer"
 
 
 const Headline = ({ post }) => {

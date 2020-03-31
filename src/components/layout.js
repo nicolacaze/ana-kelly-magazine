@@ -16,6 +16,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
+import SideDrawer from './sideDrawer'
 
 const Grid = styled.div`
   display: grid;
@@ -65,6 +66,7 @@ const Layout = ({ children }) => {
 
   return (
     <Grid>
+      <SideDrawer />
       <Header siteTitle={data.site.siteMetadata.title} />
       <Main>{children}</Main>
       <Footer>

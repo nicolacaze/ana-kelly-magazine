@@ -2,6 +2,7 @@ import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 import styled from 'styled-components'
+import DrawerToggleButton from './drawerToggleButton.js'
 
 
 const HeaderContainer = styled.header`
@@ -66,6 +67,9 @@ const Header = ({ siteTitle }) => {
   return (
     <HeaderContainer>
       <nav>
+        <div>
+          <DrawerToggleButton />
+        </div>
         <div>
           <h1>
             <Link to="/">
