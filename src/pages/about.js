@@ -3,7 +3,6 @@ import { graphql } from 'gatsby'
 import styled from 'styled-components'
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Menu from "../components/menu"
 
 const Title = styled.h2`
   font-size: 2.5rem;
@@ -18,7 +17,6 @@ export default ({ data }) => {
   return (
     <Layout>
       <SEO title="about" />
-      <Menu />
       <Title>{data.wordpressPage.title}</Title>
       <div dangerouslySetInnerHTML={{ __html: removeWPstyling(data.wordpressPage.content) }} />
     </Layout>

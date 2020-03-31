@@ -3,7 +3,6 @@ import { graphql } from "gatsby"
 import styled from 'styled-components'
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Menu from "../components/menu"
 import DOMPurify from 'dompurify'
 
 const BlogPostLayout = styled.div`
@@ -58,7 +57,6 @@ export default ({ data }) => {
     <Layout>
       <BlogPostLayout>
         <SEO title="home" />
-        <Menu />
         <div>
           <h1>{post.title}</h1>
           <div dangerouslySetInnerHTML={{ __html: post.content }} />

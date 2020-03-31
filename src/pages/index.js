@@ -4,7 +4,6 @@ import { Link } from 'gatsby'
 import styled from 'styled-components'
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Menu from "../components/menu"
 import Slider from "../components/slider"
 
 
@@ -52,7 +51,6 @@ export default ({ data }) => {
   return (
     <Layout>
       <SEO title="home" />
-      <Menu />
       <Headline post={data.headline.edges[0].node} />
       <HomeSection title='Créateurs' posts={data.designers.edges} />
       <HomeSection title='Rencontres' posts={data.encounters.edges} />

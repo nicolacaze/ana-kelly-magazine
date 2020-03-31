@@ -20,7 +20,7 @@ import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
 const Grid = styled.div`
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 200px auto 200px;
+  grid-template-rows: 300px auto 200px;
 `
 
 const Main = styled.main`
