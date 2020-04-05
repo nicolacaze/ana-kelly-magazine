@@ -11,6 +11,9 @@ const HeaderContainer = styled.header`
   align-self: flex-start;
   padding: 2rem 1rem;
   nav {
+    .nav-bar {
+      display: none;
+    }
     h1 {
       text-align: center;
       a {
@@ -25,7 +28,11 @@ const HeaderContainer = styled.header`
     width: 100%;
     nav {
       display: flex;
-      div:first-child {
+      .nav-bar {
+        display: block;
+        margin-right: 1rem;
+      }
+      .site-title {
         margin-right: 1rem;
       }
       h1 {
@@ -35,6 +42,9 @@ const HeaderContainer = styled.header`
         a {
           font-size: 1.8rem;
         }
+      }
+      .menu {
+        display: none;
       }
     }
   }
@@ -51,42 +61,25 @@ const HeaderContainer = styled.header`
   }
 `
 
-const Header = ({ siteTitle, toggleSideDrawer }) => {
-  if(window.innerWidth < 1000) {
-    return (
-      <HeaderContainer>
-        <nav>
-          <div>
-            <DrawerToggleButton crossVersion={false} toggleSideDrawer={toggleSideDrawer} />
-          </div>
-          <div>
-            <h1>
-              <Link to="/">
-                {siteTitle}
-              </Link>
-            </h1>
-          </div>
-        </nav>
-      </HeaderContainer>
-    )
-  }
-  return (
-    <HeaderContainer>
-      <nav>
-        <div>
-          <h1>
-            <Link to="/">
-              {siteTitle}
-            </Link>
-          </h1>
-        </div>
-        <div>
-          <Menu />
-        </div>
-      </nav>
-    </HeaderContainer>
-  )
-}
+const Header = ({ siteTitle, toggleSideDrawer }) => (
+  <HeaderContainer>
+    <nav>
+      <div className='nav-bar' >
+        <DrawerToggleButton crossVersion={false} toggleSideDrawer={toggleSideDrawer} />
+      </div>
+      <div>
+        <h1 className='site-title'>
+          <Link to="/">
+            {siteTitle}
+          </Link>
+        </h1>
+      </div>
+      <div className='menu'>
+        <Menu />
+      </div>
+    </nav>
+  </HeaderContainer>
+)
 
 Header.propTypes = {
   siteTitle: PropTypes.string,

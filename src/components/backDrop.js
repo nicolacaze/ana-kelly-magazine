@@ -11,6 +11,4 @@ const BackDrop = styled.div`
   z-index: 100;
 `
 
-export default ({ closeSideDrawer }) => (
-  <BackDrop onClick={closeSideDrawer} />
-)
+export default ({ closeSideDrawer }) => <BackDrop onClick={closeSideDrawer} />
