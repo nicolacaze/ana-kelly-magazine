@@ -3,73 +3,76 @@ import PropTypes from "prop-types"
 import React from "react"
 import styled from 'styled-components'
 import DrawerToggleButton from './drawerToggleButton.js'
+import Menu from './menu.js'
 
 
 const HeaderContainer = styled.header`
   justify-self: center;
-  align-self: center;
-  h1 {
-    a {
-      font-size: 3rem;
-      color: #000;
-      text-decoration: none;
+  align-self: flex-start;
+  padding: 2rem 1rem;
+  nav {
+    h1 {
+      text-align: center;
+      a {
+        font-size: 3rem;
+        color: #000;
+        text-decoration: none;
+      }
+    }
+  }
+  @media (max-width: 1000px) {
+    justify-self: flex-start;
+    width: 100%;
+    nav {
+      display: flex;
+      div:first-child {
+        margin-right: 1rem;
+      }
+      h1 {
+        text-align: start;
+        margin-bottom: 0;
+        line-height: 1.4;
+        a {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
+  @media (max-width: 576px) {
+    justify-self: flex-start;
+    width: 100%;
+    nav {
+      h1 {
+        a {
+          font-size: 1.4rem;
+        }
+      }
     }
   }
 `
-const MenuContainer = styled.ul`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  padding: 0;
-  height: 3rem;
-  margin: 0;
-`
 
-const MenuItem = styled.li`
-  list-style: none;
-  justify-self: center;
-  font-size: 1.2rem;
-  padding: 1rem 0.5rem;
-  a {
-    text-decoration: none;
-    color: #000;
+const Header = ({ siteTitle, toggleSideDrawer }) => {
+  if(window.innerWidth < 1000) {
+    return (
+      <HeaderContainer>
+        <nav>
+          <div>
+            <DrawerToggleButton crossVersion={false} toggleSideDrawer={toggleSideDrawer} />
+          </div>
+          <div>
+            <h1>
+              <Link to="/">
+                {siteTitle}
+              </Link>
+            </h1>
+          </div>
+        </nav>
+      </HeaderContainer>
+    )
   }
-  &:hover {
-    border-bottom: 1px solid #000;
-  }
-`
-
-const Menu = () => (
-  <MenuContainer>
-    <MenuItem>
-      <Link to='/designers'>
-        Créateurs
-      </Link>
-    </MenuItem>
-    <MenuItem>
-      <Link to='/encounters'>
-        Rencontres
-      </Link>
-    </MenuItem>
-    <MenuItem>
-      <Link to='/advice'>
-        Conseils
-      </Link>
-    </MenuItem>
-    <MenuItem>
-      <Link to='/about'>
-        À propos
-      </Link>
-    </MenuItem>
-  </MenuContainer>
-)
-
-const Header = ({ siteTitle }) => {
   return (
     <HeaderContainer>
       <nav>
-        <div>
-          <DrawerToggleButton />
-        </div>
         <div>
           <h1>
             <Link to="/">
@@ -87,6 +90,7 @@ const Header = ({ siteTitle }) => {
 
 Header.propTypes = {
   siteTitle: PropTypes.string,
+  toggleSideDrawer: PropTypes.func,
 }
 
 Header.defaultProps = {

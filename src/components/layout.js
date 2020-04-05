@@ -5,7 +5,7 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from "react"
+import React, { useState } from "react"
 import styled from 'styled-components'
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
@@ -17,11 +17,15 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import SideDrawer from './sideDrawer'
+import BackDrop from './backDrop'
 
 const Grid = styled.div`
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: 300px auto 200px;
+  @media (max-width: 1000px) {
+    grid-template-rows: 200px auto 200px;
+  }
 `
 
 const Main = styled.main`
@@ -54,6 +58,7 @@ const SocialIcon = ({ link, icon, size }) => (
 )
 
 const Layout = ({ children }) => {
+
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -64,10 +69,35 @@ const Layout = ({ children }) => {
     }
   `)
 
+  const [state, setState] = useState({
+    isSideDrawerVisible: false,
+  });
+
+  const toggleSideDrawerClickHandler = () => {
+    setState((prevState) => {
+      return {
+        isSideDrawerVisible: !prevState.isSideDrawerVisible,
+      }
+    });
+  }
+
+  const backDropClickHandler = () => {
+    setState({ 
+      isSideDrawerVisible: false, 
+    });
+  }
+
+  let backDrop;
+
+  if(state.isSideDrawerVisible) {
+    backDrop = <BackDrop closeSideDrawer={backDropClickHandler} />;
+  }
+
   return (
     <Grid>
-      <SideDrawer />
-      <Header siteTitle={data.site.siteMetadata.title} />
+      {backDrop}
+      <SideDrawer toggleSideDrawer={toggleSideDrawerClickHandler} show={state.isSideDrawerVisible} />
+      <Header siteTitle={data.site.siteMetadata.title} toggleSideDrawer={toggleSideDrawerClickHandler} />
       <Main>{children}</Main>
       <Footer>
         <SocialContainer>
