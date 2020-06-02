@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
-import Menu from './menu'
-import DrawerToggleButton from './drawerToggleButton'
+import React from "react"
+import styled from "styled-components"
+import Menu from "./menu"
+import DrawerToggleButton from "./drawerToggleButton"
 
 const SideDrawerContainer = styled.nav`
   display: flex;
@@ -15,15 +15,18 @@ const SideDrawerContainer = styled.nav`
   top: 0;
   left: 0;
   z-index: 200;
-  transform: translateX(${props => props.animate ? '0' : '-100%'});
+  transform: translateX(${props => (props.animate ? "0" : "-100%")});
   transition: transform 0.3s ease-out;
 `
 
 const SideDrawer = ({ show, toggleSideDrawer }) => (
-  <SideDrawerContainer animate={show} >
-    <DrawerToggleButton toggleSideDrawer={toggleSideDrawer} crossVersion={true} />
-    <Menu isVertical={true}/>
+  <SideDrawerContainer animate={show}>
+    <DrawerToggleButton
+      toggleSideDrawer={toggleSideDrawer}
+      crossVersion={true}
+    />
+    <Menu isVertical={true} />
   </SideDrawerContainer>
 )
 
-export default SideDrawer;
+export default SideDrawer

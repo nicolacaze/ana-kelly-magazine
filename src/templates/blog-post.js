@@ -1,9 +1,9 @@
 import React from "react"
 import { graphql } from "gatsby"
-import styled from 'styled-components'
+import styled from "styled-components"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import DOMPurify from 'dompurify'
+import DOMPurify from "dompurify"
 
 const BlogPostLayout = styled.div`
   figure {
@@ -51,7 +51,7 @@ const BlogPostLayout = styled.div`
 // });
 
 export default ({ data }) => {
-  const post = data.allWordpressPost.edges[0].node;
+  const post = data.allWordpressPost.edges[0].node
 
   return (
     <Layout>

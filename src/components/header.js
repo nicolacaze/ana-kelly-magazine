@@ -1,10 +1,9 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
-import styled from 'styled-components'
-import DrawerToggleButton from './drawerToggleButton.js'
-import Menu from './menu.js'
-
+import styled from "styled-components"
+import DrawerToggleButton from "./drawerToggleButton.js"
+import Menu from "./menu.js"
 
 const HeaderContainer = styled.header`
   justify-self: center;
@@ -64,17 +63,18 @@ const HeaderContainer = styled.header`
 const Header = ({ siteTitle, toggleSideDrawer }) => (
   <HeaderContainer>
     <nav>
-      <div className='nav-bar' >
-        <DrawerToggleButton crossVersion={false} toggleSideDrawer={toggleSideDrawer} />
+      <div className="nav-bar">
+        <DrawerToggleButton
+          crossVersion={false}
+          toggleSideDrawer={toggleSideDrawer}
+        />
       </div>
       <div>
-        <h1 className='site-title'>
-          <Link to="/">
-            {siteTitle}
-          </Link>
+        <h1 className="site-title">
+          <Link to="/">{siteTitle}</Link>
         </h1>
       </div>
-      <div className='menu'>
+      <div className="menu">
         <Menu />
       </div>
     </nav>

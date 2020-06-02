@@ -32,6 +32,6 @@ exports.createPages = ({ graphql, actions }) => {
           slug: node.slug,
         },
       })
-    })  
+    })
   })
 }

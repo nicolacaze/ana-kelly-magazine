@@ -1,8 +1,7 @@
-import React from 'react'
-import { Link } from 'gatsby'
-import styled from 'styled-components'
-import DOMPurify from 'dompurify'
-
+import React from "react"
+import { Link } from "gatsby"
+import styled from "styled-components"
+import DOMPurify from "dompurify"
 
 const Grid = styled.div`
   display: grid;
@@ -14,10 +13,10 @@ const Grid = styled.div`
   }
   @media (max-width: 900px) {
     grid-template-columns: 1fr 1fr;
-   }
+  }
   @media (max-width: 675px) {
     grid-template-columns: 1fr;
-   }
+  }
 `
 
 const Article = styled.article`
@@ -40,8 +39,6 @@ const Img = styled.img`
 // });
 
 const gridLayout = ({ posts }) => {
-
-
   return (
     <Grid>
       {posts.map(({ node }) => {
@@ -49,7 +46,7 @@ const gridLayout = ({ posts }) => {
           <Link key={node.id} to={node.slug}>
             <Article>
               <Title>{node.title}</Title>
-              <Img src={node.jetpack_featured_media_url} alt="" srcset=""/>
+              <Img src={node.jetpack_featured_media_url} alt="" srcset="" />
               <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
             </Article>
           </Link>

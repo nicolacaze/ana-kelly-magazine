@@ -45,7 +45,7 @@ module.exports = {
         hostingWPCOM: true,
         // If useACF is true, then the source plugin will try to import the WordPress ACF Plugin contents.
         // This feature is untested for sites hosted on WordPress.com
-        useACF: false,
+        useACF: true,
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality

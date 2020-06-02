@@ -7,55 +7,68 @@ import SEO from "../components/seo"
 import Slider from "../components/slider"
 
 
-const Headline = ({ post }) => {
 
-  const HeadImage = styled.div`
-    background-image: url('${post.jetpack_featured_media_url}');
-    background-size: cover;
-    height: 350px;
-  `
-
-  return (
-    <section>
-      <h1>A la une</h1>
-      <div>
-        <Link to={post.slug}>
-          <HeadImage></HeadImage>
-        </Link>
-        <p>{post.title}</p>
-      </div>
-    </section>
-  )
-}
-
-const Section = styled.section`
-  margin: 0 0 3rem;
+const Mosaic = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 100px);
+  grid-auto-rows: 100px;
+  
 `
 
-const SectionTitle = styled.h2`
-  text-align: center;
-  font-size: 2.5rem;
-  border-bottom: 1px solid #000;
-  margin: 2rem 0;
-  padding 0 0 1rem;
+const HomeLayout = styled.div`
+  display: grid;
+  grid-template-columns: 40% 60%;
 `
 
-const HomeSection = ({ title, posts }) => (
-  <Section>
-    <SectionTitle>{title}</SectionTitle>
-    <Slider posts={posts} />
-  </Section>
-)
+const Menu = styled.nav`
+  border: 2px solid #000;
+  padding: 2rem;
+  text-transform: uppercase;
+  .menuItems {
+    list-style: none;
+    margin: 0;
+  }
+`
+
+const MosaicTile = styled.div`
+  overflow: hidden;
+  display: grid;
+  grid-column: span ${props => props.vertical};
+  grid-row: span ${props => props.horizontal};
+  img {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`
+
+const generateRandomNumber = (limit) => Math.floor(Math.random() * limit + 1)
 
 export default ({ data }) => {
+  console.log(data.pictures)
   return (
-    <Layout>
+    <HomeLayout>
       <SEO title="home" />
-      <Headline post={data.headline.edges[0].node} />
-      <HomeSection title='Créateurs' posts={data.designers.edges} />
-      <HomeSection title='Rencontres' posts={data.encounters.edges} />
-      <HomeSection title='Conseils' posts={data.advice.edges} />
-    </Layout>
+      <div>
+        <Menu>
+          <ul className="menuItems">
+            <li>Ana Kelly magazine</li>
+            <li>Ana kelly boutique</li>
+            <li>Ana Kelly family</li>
+            <li>Ana Kelly</li>
+          </ul>
+        </Menu>
+      </div>
+      <Mosaic>
+        {data.pictures.edges.slice(0,5).map(({ node }) => 
+          <MosaicTile key={node.id} vertical={generateRandomNumber(4)} horizontal={generateRandomNumber(4)}>
+            <img src={node.jetpack_featured_media_url} alt="pics"/>
+          </MosaicTile>
+        )}
+      </Mosaic>
+    </HomeLayout>
   )
 }
 
@@ -64,11 +77,19 @@ export const pageQuery = graphql`
     headline: allWordpressPost(sort: {order: DESC, fields: [date]}, limit: 1) {
       edges {
         node {
+          id
           jetpack_featured_media_url
           title
           excerpt
           slug
           date
+        }
+      }
+    }
+    pictures: allWordpressPost {
+      edges {
+        node {
+          jetpack_featured_media_url
         }
       }
     }

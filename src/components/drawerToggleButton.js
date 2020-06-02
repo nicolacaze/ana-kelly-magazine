@@ -1,6 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
-
+import React from "react"
+import styled from "styled-components"
 
 const Button = styled.button`
   display: flex;
@@ -24,7 +23,7 @@ const Button = styled.button`
     height: 2px;
     background: #000;
     ${({ transform }) => {
-      if(transform) {
+      if (transform) {
         return `
         &:nth-of-type(1) {
           display: none;
@@ -43,7 +42,7 @@ const Button = styled.button`
 
 const drawerToggleButton = ({ toggleSideDrawer, crossVersion }) => {
   return (
-    <Button transform={crossVersion} onClick={toggleSideDrawer} >
+    <Button transform={crossVersion} onClick={toggleSideDrawer}>
       <div />
       <div />
       <div />

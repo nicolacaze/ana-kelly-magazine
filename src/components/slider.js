@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { Link } from 'gatsby'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
-
+import React, { useState } from "react"
+import styled from "styled-components"
+import { Link } from "gatsby"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons"
 
 const ArrowLayout = styled.div`
   display: flex;
   position: absolute;
   top: 50%;
-  ${props => props.direction === 'right' ? `right: 25px` : `left: 25px`};
+  ${props => (props.direction === "right" ? `right: 25px` : `left: 25px`)};
   height: 50px;
   width: 50px;
   justify-content: center;
@@ -22,7 +24,9 @@ const ArrowLayout = styled.div`
     transform: scale(1.1);
   }
   img {
-    transform: translateX(${props => props.direction === 'left' ? '-2' : '2'}px);
+    transform: translateX(
+      ${props => (props.direction === "left" ? "-2" : "2")}px
+    );
     &:focus {
       outline: 0;
     }
@@ -33,15 +37,23 @@ const ArrowLayout = styled.div`
 `
 
 const Arrow = ({ direction, handleClick }) => (
-  <ArrowLayout direction={direction} onClick={handleClick} >
-    {direction === 'right' ? <FontAwesomeIcon icon={faChevronRight} size="1x"/> : <FontAwesomeIcon icon={faChevronLeft} size="1x"/>}
+  <ArrowLayout direction={direction} onClick={handleClick}>
+    {direction === "right" ? (
+      <FontAwesomeIcon icon={faChevronRight} size="1x" />
+    ) : (
+      <FontAwesomeIcon icon={faChevronLeft} size="1x" />
+    )}
   </ArrowLayout>
 )
 
 const SliderContent = styled.ul`
   --slideSize: calc((100% - 2rem) / 3);
   --gridGap: 1rem;
-  transform: translateX(calc(-${props => props.index} * var(--slideSize) - ${props => props.index} * var(--gridGap)));
+  transform: translateX(
+    calc(
+      -${props => props.index} * var(--slideSize) - ${props => props.index} * var(--gridGap)
+    )
+  );
   transition: transform ease-out ${props => props.transition}s;
   height: 100%;
   width: 100%;
@@ -57,7 +69,7 @@ const SliderContent = styled.ul`
     overflow: -moz-scrollbars-none;
     scrollbar-width: none;
     ::-webkit-scrollbar {
-      display: none;  /* Remove scrollbar space */
+      display: none; /* Remove scrollbar space */
     }
   }
 `
@@ -83,12 +95,11 @@ const FeaturedImage = styled.img`
 `
 
 const Slider = ({ posts }) => {
-
   const [state, setState] = useState({
     index: 0,
     transition: 0.45,
   })
-  
+
   const { index, transition } = state
 
   const nextSlide = () => {
@@ -108,21 +119,25 @@ const Slider = ({ posts }) => {
       })
     }
   }
-  
+
   return (
     <SliderLayout>
       <SliderContent
         index={index}
         transition={transition}
-        length={posts.length}>
+        length={posts.length}
+      >
         {posts.map(({ node }) => (
           <PostContainer key={node.id}>
             <Link to={node.slug}>
-              <FeaturedImage src={node.jetpack_featured_media_url} alt="Post featured" />
+              <FeaturedImage
+                src={node.jetpack_featured_media_url}
+                alt="Post featured"
+              />
               <h4>{node.title}</h4>
             </Link>
           </PostContainer>
-          ))}
+        ))}
       </SliderContent>
       <Arrow direction="left" handleClick={prevSlide} />
       <Arrow direction="right" handleClick={nextSlide} />
