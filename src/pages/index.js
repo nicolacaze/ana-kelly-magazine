@@ -16,14 +16,33 @@ const HomeLayout = styled.div`
   margin: auto;
 `
 
+// const Mosaic = styled.div`
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+//   grid-auto-rows: 100px;
+//   margin-left: 1rem;
+//   grid-gap: 0.2rem;
+// `
+
 const Mosaic = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-auto-rows: 100px;
+  grid-template-areas:
+    "first-tile first-tile first-tile second-tile"
+    "first-tile first-tile first-tile second-tile"
+    "first-tile first-tile first-tile second-tile"
+    "third-tile third-tile fourth-tile fifth-tile"
+    "third-tile third-tile fourth-tile fifth-tile"
+    "third-tile third-tile fourth-tile fifth-tile"
+    "third-tile third-tile fourth-tile fifth-tile"
+    "third-tile third-tile sixth-tile sixth-tile"
+    "seventh-tile seventh-tile sixth-tile sixth-tile"
+    "seventh-tile seventh-tile sixth-tile sixth-tile"
+    "seventh-tile seventh-tile sixth-tile sixth-tile";
   margin-left: 1rem;
   grid-gap: 0.2rem;
 `
-
 
 const Menu = styled.nav`
   border: 2px solid #000;
@@ -34,6 +53,7 @@ const Menu = styled.nav`
     margin: 0;
   }
 `
+
 const getVerticalSpan = index => {
   switch(index) {
     case 0:
@@ -72,11 +92,31 @@ const getHorizontalSpan = index => {
   }
 }
 
+const getTileAreaPosition = index => {
+  switch(index) {
+    case 0:
+      return 'first-tile';
+    case 1:
+      return 'second-tile';
+    case 2:
+      return 'third-tile';
+    case 3:
+      return 'fourth-tile';
+    case 4:
+      return 'fifth-tile';
+    case 5:
+      return 'sixth-tile';
+    case 6:
+      return 'seventh-tile';
+  }
+}
+
 const MosaicTile = styled.div`
   overflow: hidden;
   display: grid;
-  grid-column: span ${({ itemNumber }) => getVerticalSpan(itemNumber)};
-  grid-row: span ${({ itemNumber }) => getHorizontalSpan(itemNumber)};
+  // grid-column: span ${({ itemNumber }) => getVerticalSpan(itemNumber)};
+  // grid-row: span ${({ itemNumber }) => getHorizontalSpan(itemNumber)};
+  grid-area: ${({ itemNumber }) => getTileAreaPosition(itemNumber)};
   img {
     grid-column: 1 / -1;
     grid-row: 1 / -1;
