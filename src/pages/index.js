@@ -48,6 +48,8 @@ const Menu = styled.nav`
   border: 2px solid #000;
   padding: 2rem;
   text-transform: uppercase;
+  position: relative;
+  top: 200px;
   .menuItems {
     list-style: none;
     margin: 0;
@@ -127,44 +129,69 @@ const MosaicTile = styled.div`
 `
 
 const MenuContainer = styled.div`
-  // margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 const Logo = styled.img`
-  position: relative;
+  position: absolute;
   top: 250px;
-  left: -240px;
+  left: -100px;
   transform: rotate(-90deg);
   width: 530px;
+`
+const Links = styled.div`
+  p {
+    margin: 0;
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+  }
+`
+
+const Footer = styled.footer`
+  text-align: center;
 `
 
 const generateRandomNumber = (limit) => Math.floor(Math.random() * limit + 1)
 
 export default ({ data }) => {
   return (
-    <HomeLayout>
-      <SEO title="home" />
-      <MenuContainer>
-        <Logo src={logo} alt="Ana Kelly logo"/>
-        <Menu>
-          <ul className="menuItems">
-            <li>Ana Kelly magazine</li>
-            <li>Ana kelly boutique</li>
-            <li>Ana Kelly family</li>
-            <li>Ana Kelly</li>
-          </ul>
-        </Menu>
-      </MenuContainer>
-      <Mosaic>
-        {console.log(data.pictures.edges)}
-        {data.pictures.edges.slice(0,7)
-        .map(({ node }, i) => 
-          <MosaicTile key={node.id} itemNumber={i}>
-            <img src={node.jetpack_featured_media_url} alt="pics"/>
-          </MosaicTile>
-        )}
-      </Mosaic>
-    </HomeLayout>
+    <>
+      <HomeLayout>
+        <SEO title="home" />
+        <MenuContainer>
+          <Logo src={logo} alt="Ana Kelly logo"/>
+          <Menu>
+            <ul className="menuItems">
+              <li>Ana Kelly magazine</li>
+              <li>Ana kelly boutique</li>
+              <li>Ana Kelly family</li>
+              <li>Ana Kelly</li>
+            </ul>
+          </Menu>
+          <Links>
+            <p><a href="https://www.instagram.com/anakellymagazine/">Instagram</a></p>
+            <p><a href="https://www.facebook.com/anakellymagazine/">Facebook</a></p>
+            <p><a href="https://www.linkedin.com/in/ana-kelly-6a8718168/">LinkedIn</a></p>
+            <p><a href="mailto:anakellymagazine@gmail.com">Email</a></p>
+            <p><a href="">Contact</a></p>
+          </Links>
+        </MenuContainer>
+        <Mosaic>
+          {console.log(data.pictures.edges)}
+          {data.pictures.edges.slice(0,7)
+          .map(({ node }, i) => 
+            <MosaicTile key={node.id} itemNumber={i}>
+              <img src={node.jetpack_featured_media_url} alt="pics"/>
+            </MosaicTile>
+          )}
+        </Mosaic>
+      </HomeLayout>
+      <Footer>© - Ana Kelly Magazine - Tous droits réservés</Footer>
+    </>
   )
 }
 
