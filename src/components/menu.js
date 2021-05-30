@@ -1,12 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'gatsby'
-import styled from 'styled-components'
-
+import React from "react"
+import PropTypes from "prop-types"
+import { Link } from "gatsby"
+import styled from "styled-components"
 
 const MenuContainer = styled.ul`
   display: grid;
-  grid-template-columns: ${props => props.isVertical ? '1fr' : '1fr 1fr 1fr 1fr'};
+  grid-template-columns: ${props =>
+    props.isVertical ? "1fr" : "1fr 1fr 1fr 1fr"};
   padding: 3rem 1rem;
   height: 3rem;
   margin: 0;
@@ -29,24 +29,16 @@ const MenuItem = styled.li`
 const Menu = ({ isVertical }) => (
   <MenuContainer isVertical={isVertical}>
     <MenuItem>
-      <Link to='/designers'>
-        Créateurs
-      </Link>
+      <Link to="/designers">Créateurs</Link>
     </MenuItem>
     <MenuItem>
-      <Link to='/encounters'>
-        Rencontres
-      </Link>
+      <Link to="/encounters">Rencontres</Link>
     </MenuItem>
     <MenuItem>
-      <Link to='/advice'>
-        Conseils
-      </Link>
+      <Link to="/advice">Conseils</Link>
     </MenuItem>
     <MenuItem>
-      <Link to='/about'>
-        À propos
-      </Link>
+      <Link to="/about">À propos</Link>
     </MenuItem>
   </MenuContainer>
 )
@@ -59,4 +51,4 @@ Menu.defaultProps = {
   isVertical: false,
 }
 
-export default Menu;
+export default Menu

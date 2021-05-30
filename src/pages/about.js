@@ -1,6 +1,6 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import styled from 'styled-components'
+import React from "react"
+import { graphql } from "gatsby"
+import styled from "styled-components"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
@@ -11,21 +11,25 @@ const Title = styled.h2`
 `
 
 export default ({ data }) => {
-
-  const removeWPstyling = content => content.replace(/(style="[^"]+")|(class="[^"]+")/g,'');
+  const removeWPstyling = content =>
+    content.replace(/(style="[^"]+")|(class="[^"]+")/g, "")
 
   return (
     <Layout>
       <SEO title="about" />
       <Title>{data.wordpressPage.title}</Title>
-      <div dangerouslySetInnerHTML={{ __html: removeWPstyling(data.wordpressPage.content) }} />
+      <div
+        dangerouslySetInnerHTML={{
+          __html: removeWPstyling(data.wordpressPage.content),
+        }}
+      />
     </Layout>
   )
 }
 
 export const pageQuery = graphql`
   query {
-    wordpressPage(id: {eq: "cd5b61b0-280c-5df7-938f-055283715a69"}) {
+    wordpressPage(id: { eq: "cd5b61b0-280c-5df7-938f-055283715a69" }) {
       id
       date
       slug

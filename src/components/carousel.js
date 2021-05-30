@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
-import { Link } from 'gatsby'
-import styled from 'styled-components'
-
+import React, { useState } from "react"
+import { Link } from "gatsby"
+import styled from "styled-components"
 
 const Carousel = ({ posts }) => {
-  const [position, setPosition] = useState(0);
-  const [slides, setSlides] = useState(posts.edges);
+  const [position, setPosition] = useState(0)
+  const [slides, setSlides] = useState(posts.edges)
 
   const Container = styled.div`
     overflow-x: hidden;
@@ -22,7 +21,7 @@ const Carousel = ({ posts }) => {
     transform: translateX(-${props => props.position}px);
     transition: all 0.5s;
   `
-  
+
   const PostContainer = styled.li`
     margin-left: 1rem;
     list-style: none;
@@ -32,23 +31,23 @@ const Carousel = ({ posts }) => {
       color: #000;
     }
   `
-  
+
   const FeaturedImage = styled.img`
     width: 400px;
   `
 
   const next = () => {
-    const first = slides[0];
-    const restOfSlides = slides.slice(1);
-    setSlides([...restOfSlides, first]);
-    setPosition(position + 800);
+    const first = slides[0]
+    const restOfSlides = slides.slice(1)
+    setSlides([...restOfSlides, first])
+    setPosition(position + 800)
   }
 
   const prev = () => {
-    const lastSlide = slides[slides.length - 1];
-    const restOfSlides = slides.slice(0, -1);
-    setSlides([lastSlide, ...restOfSlides]);
-    setPosition(position - 800);
+    const lastSlide = slides[slides.length - 1]
+    const restOfSlides = slides.slice(0, -1)
+    setSlides([lastSlide, ...restOfSlides])
+    setPosition(position - 800)
   }
 
   return (
@@ -57,12 +56,15 @@ const Carousel = ({ posts }) => {
       <ListContainer position={position}>
         {slides.map(({ node }) => {
           return (
-          <PostContainer key={node.id} >
-            <Link to={node.slug}>
-              <FeaturedImage src={node.jetpack_featured_media_url} alt="Post featured"/>
-              <h4>{node.title}</h4>
-            </Link>
-          </PostContainer>
+            <PostContainer key={node.id}>
+              <Link to={node.slug}>
+                <FeaturedImage
+                  src={node.jetpack_featured_media_url}
+                  alt="Post featured"
+                />
+                <h4>{node.title}</h4>
+              </Link>
+            </PostContainer>
           )
         })}
       </ListContainer>

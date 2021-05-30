@@ -5,57 +5,193 @@ import styled from 'styled-components'
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Slider from "../components/slider"
+import logo from "../images/anakelly_logo.svg"
 
 
-const Headline = ({ post }) => {
+const HomeLayout = styled.div`
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+`
 
-  const HeadImage = styled.div`
-    background-image: url('${post.jetpack_featured_media_url}');
-    background-size: cover;
-    height: 350px;
-  `
+// const Mosaic = styled.div`
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+//   grid-auto-rows: 100px;
+//   margin-left: 1rem;
+//   grid-gap: 0.2rem;
+// `
 
-  return (
-    <section>
-      <h1>A la une</h1>
-      <div>
-        <Link to={post.slug}>
-          <HeadImage></HeadImage>
-        </Link>
-        <p>{post.title}</p>
-      </div>
-    </section>
-  )
+const Mosaic = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-auto-rows: 100px;
+  grid-template-areas:
+    "first-tile first-tile first-tile second-tile"
+    "first-tile first-tile first-tile second-tile"
+    "first-tile first-tile first-tile second-tile"
+    "third-tile third-tile fourth-tile fifth-tile"
+    "third-tile third-tile fourth-tile fifth-tile"
+    "third-tile third-tile fourth-tile fifth-tile"
+    "third-tile third-tile fourth-tile fifth-tile"
+    "third-tile third-tile sixth-tile sixth-tile"
+    "seventh-tile seventh-tile sixth-tile sixth-tile"
+    "seventh-tile seventh-tile sixth-tile sixth-tile"
+    "seventh-tile seventh-tile sixth-tile sixth-tile";
+  margin-left: 1rem;
+  grid-gap: 0.2rem;
+`
+
+const Menu = styled.nav`
+  border: 2px solid #000;
+  padding: 2rem;
+  text-transform: uppercase;
+  position: relative;
+  top: 200px;
+  .menuItems {
+    list-style: none;
+    margin: 0;
+  }
+`
+
+const getVerticalSpan = index => {
+  switch(index) {
+    case 0:
+      return 5;
+    case 1:
+      return 2;
+    case 2:
+      return 3;
+    case 3:
+      return 2;
+    case 4:
+      return 2;
+    case 5:
+      return 4;
+    case 6:
+      return 3;
+  }
 }
 
-const Section = styled.section`
-  margin: 0 0 3rem;
+const getHorizontalSpan = index => {
+  switch(index) {
+    case 0:
+      return 4;
+    case 1:
+      return 4;
+    case 2:
+      return 6;
+    case 3:
+      return 5;
+    case 4:
+      return 5;
+    case 5:
+      return 4;
+    case 6:
+      return 3;
+  }
+}
+
+const getTileAreaPosition = index => {
+  switch(index) {
+    case 0:
+      return 'first-tile';
+    case 1:
+      return 'second-tile';
+    case 2:
+      return 'third-tile';
+    case 3:
+      return 'fourth-tile';
+    case 4:
+      return 'fifth-tile';
+    case 5:
+      return 'sixth-tile';
+    case 6:
+      return 'seventh-tile';
+  }
+}
+
+const MosaicTile = styled.div`
+  overflow: hidden;
+  display: grid;
+  // grid-column: span ${({ itemNumber }) => getVerticalSpan(itemNumber)};
+  // grid-row: span ${({ itemNumber }) => getHorizontalSpan(itemNumber)};
+  grid-area: ${({ itemNumber }) => getTileAreaPosition(itemNumber)};
+  img {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `
 
-const SectionTitle = styled.h2`
+const MenuContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`
+
+const Logo = styled.img`
+  position: absolute;
+  top: 250px;
+  left: -100px;
+  transform: rotate(-90deg);
+  width: 530px;
+`
+const Links = styled.div`
+  p {
+    margin: 0;
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+  }
+`
+
+const Footer = styled.footer`
   text-align: center;
-  font-size: 2.5rem;
-  border-bottom: 1px solid #000;
-  margin: 2rem 0;
-  padding 0 0 1rem;
 `
 
-const HomeSection = ({ title, posts }) => (
-  <Section>
-    <SectionTitle>{title}</SectionTitle>
-    <Slider posts={posts} />
-  </Section>
-)
+const generateRandomNumber = (limit) => Math.floor(Math.random() * limit + 1)
 
 export default ({ data }) => {
   return (
-    <Layout>
-      <SEO title="home" />
-      <Headline post={data.headline.edges[0].node} />
-      <HomeSection title='Créateurs' posts={data.designers.edges} />
-      <HomeSection title='Rencontres' posts={data.encounters.edges} />
-      <HomeSection title='Conseils' posts={data.advice.edges} />
-    </Layout>
+    <>
+      <HomeLayout>
+        <SEO title="home" />
+        <MenuContainer>
+          <Logo src={logo} alt="Ana Kelly logo"/>
+          <Menu>
+            <ul className="menuItems">
+              <li>Ana Kelly magazine</li>
+              <li>Ana kelly boutique</li>
+              <li>Ana Kelly family</li>
+              <li>Ana Kelly</li>
+            </ul>
+          </Menu>
+          <Links>
+            <p><a href="https://www.instagram.com/anakellymagazine/">Instagram</a></p>
+            <p><a href="https://www.facebook.com/anakellymagazine/">Facebook</a></p>
+            <p><a href="https://www.linkedin.com/in/ana-kelly-6a8718168/">LinkedIn</a></p>
+            <p><a href="mailto:anakellymagazine@gmail.com">Email</a></p>
+            <p><a href="">Contact</a></p>
+          </Links>
+        </MenuContainer>
+        <Mosaic>
+          {console.log(data.pictures.edges)}
+          {data.pictures.edges.slice(0,7)
+          .map(({ node }, i) => 
+            <MosaicTile key={node.id} itemNumber={i}>
+              <img src={node.jetpack_featured_media_url} alt="pics"/>
+            </MosaicTile>
+          )}
+        </Mosaic>
+      </HomeLayout>
+      <Footer>© - Ana Kelly Magazine - Tous droits réservés</Footer>
+    </>
   )
 }
 
@@ -64,11 +200,19 @@ export const pageQuery = graphql`
     headline: allWordpressPost(sort: {order: DESC, fields: [date]}, limit: 1) {
       edges {
         node {
+          id
           jetpack_featured_media_url
           title
           excerpt
           slug
           date
+        }
+      }
+    }
+    pictures: allWordpressPost {
+      edges {
+        node {
+          jetpack_featured_media_url
         }
       }
     }
